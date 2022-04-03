@@ -1,37 +1,15 @@
 from random import choice
 from cpu_specifications import cpu_dict_intel, cpu_dict_amd
-
-
-class CPU:
-    manufacturer: str
-    model: str
-    socket: str
-    cores: list
-    frequency: list
-    tdp: int
-
-    def __init__(self, manufacturer: str, model: str, socket: str, cores: list, frequency: list, tdp: int):
-        self.Manufacturer = manufacturer
-        self.Model = model
-        self.Socket = socket
-        self.Cores = cores
-        self.Frequency = frequency
-        self.TDP = tdp
-
-    def get_info(self) -> str:
-        return f"{self.Manufacturer}, {self.Model}, {self.Socket}, {self.Cores[0]} cores ({self.Cores[1]} threads), {self.Frequency[0]} frequency ({self.Frequency[1]} boost), {self.TDP} TDP"
-
-    def __repr__(self):
-        return f"CPU {self.Manufacturer}, {self.Model}, {self.Socket}, {self.Cores}, {self.Frequency}, {self.TDP}"
+from cpu_info import CPUInfo
 
 
 class Generator:
     def __create_manufacturer(self) -> str:
-        self.manufacturers = choice(["Intel", "AMD"])
-        return self.manufacturers
+        self.manufacturer = choice(["Intel", "AMD"])
+        return self.manufacturer
 
     def __create_model(self) -> str:
-        if self.manufacturers == "Intel":
+        if self.manufacturer == "Intel":
             self.model1 = choice([*cpu_dict_intel.keys()])
             self.model_num = cpu_dict_intel[self.model1]
         else:
@@ -41,7 +19,7 @@ class Generator:
         return f"{self.model_num} {self.model}"
 
     def __create_socket(self) -> str:
-        if self.manufacturers == "Intel":
+        if self.manufacturer == "Intel":
             if self.model_num[-1] == "3":
                 if len(self.model[0]) == 3 or self.model[0] == "L":
                     self.socket = "LGA 1156"
@@ -90,7 +68,7 @@ class Generator:
                     self.socket = "BGA 1440"
                 elif int(self.model[0: 2]) in [10, 11, 12]:
                     self.socket = "LGA 1200"
-        elif self.manufacturers == "AMD":
+        elif self.manufacturer == "AMD":
             self.socket = "AM4"
         return self.socket
 
@@ -117,15 +95,15 @@ class Generator:
     def __create_tdp(self) -> int:
         return int((int(self.model_num[-1]) + 2) * choice([10, 9.5, 6.5, 3.5, 2.5, 1.7]))
 
-    def generator(self) -> CPU:
-        return CPU(self.__create_manufacturer(), self.__create_model(), self.__create_socket(),
-                   self.__create_cores_threads(), self.__create_frequency(), self.__create_tdp())
+    def generator(self) -> CPUInfo:
+        return CPUInfo(self.__create_manufacturer(), self.__create_model(), self.__create_socket(),
+                       self.__create_cores_threads(), self.__create_frequency(), self.__create_tdp())
 
     def generate_1000(self) -> list:
-        return [self.generator().get_info() for i in range(1000)]
+        return [self.generator() for i in range(1000)]
 
     def generate_10_000(self) -> list:
-        return [self.generator().get_info() for i in range(10_000)]
+        return [self.generator() for i in range(10_000)]
 
 
 if __name__ == "__main__":
