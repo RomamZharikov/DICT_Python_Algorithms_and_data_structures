@@ -1,6 +1,5 @@
-from Practice2.Person import Generator
-from StandartList2 import StandartList2
-from LinkedList import LinkedList
+from generator import Generator
+from LinkList import LinkList
 from datetime import datetime
 
 gen = Generator()
