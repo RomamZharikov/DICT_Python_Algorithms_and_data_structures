@@ -92,29 +92,3 @@ class LinkList(AbstractStructure):
             out.append(current.data)
             current = current.next
         return out
-
-
-if __name__ == "__main__":
-    g = Generator()
-
-    p1 = g.generator()
-    p2 = g.generator()
-    p3 = g.generator()
-    p4 = g.generator()
-    p5 = g.generator()
-    print("Array generated: \n", [p1, p2, p3, p4, p5])
-    print("=" * 300)
-
-    print("Linked list created:")
-    s_list = LinkList()
-    s_list.add(p1)
-    s_list.add(p2)
-    s_list.add(p3)
-    s_list.add(p4)
-    print(s_list.add(p5, 1))
-    print("insert1: " + str(s_list.insert(p4, 1)))
-    print("insert2: " + str(s_list.insert(p4, 10)))
-
-    print(s_list.get_all())
-    print(s_list.size)
-    print(len(s_list))
