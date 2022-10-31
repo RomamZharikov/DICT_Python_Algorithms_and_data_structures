@@ -1,6 +1,6 @@
 from AbstractStructure import AbstractStructure
-from Practice2.Person import Person
-from Practice2.Person import Generator
+from cpu_info import CPUInfo
+from generator import Generator
 from Node import Node
 
 
@@ -9,7 +9,7 @@ class LinkList(AbstractStructure):
     __tail: [None, Node] = None
     size: int = 0
 
-    def add(self, value: Person, index: [None, int] = None) -> bool:
+    def add(self, value: CPUInfo, index: [None, int] = None) -> bool:
         if index is not None and (index < 0 or index >= self.size):
             return False
 
@@ -18,14 +18,6 @@ class LinkList(AbstractStructure):
             self.__head = node
             self.__tail = node
         elif index is None:
-            # вариант 1, через цикл
-            # current = self.__head
-            # while current.next:
-            #     current = current.next
-            # node = Node(value)
-            # current.next = node
-
-            # вариант 2, через вспомогательную переменную, указывающую на последний элемент
             current = self.__tail
             node = Node(value)
             current.next = node
@@ -43,7 +35,23 @@ class LinkList(AbstractStructure):
         return True
 
     def insert(self, value, index) -> bool:
-        pass
+        if index is None:
+            return False
+        else:
+            past_element = None
+            current = self.__head
+            while current != index:
+                past_element = current
+                current = current.next
+                print(f"{past_element}\n==\n{current}")
+                if current is None:
+                    return False
+            node = Node(value)
+            node.next = current.next
+            current.next =
+            past_element[1] = value[0]
+            value[1] = current.next
+            return True
 
     def find(self, value) -> [int, None]:
         pass
@@ -69,11 +77,11 @@ if __name__ == "__main__":
 
     g = Generator()
 
-    p1 = g.generate_single()
-    p2 = g.generate_single()
-    p3 = g.generate_single()
-    p4 = g.generate_single()
-    p5 = g.generate_single()
+    p1 = g.generator()
+    p2 = g.generator()
+    p3 = g.generator()
+    p4 = g.generator()
+    p5 = g.generator()
     print([p1, p2, p3, p4, p5])
 
     s_list = LinkList()
